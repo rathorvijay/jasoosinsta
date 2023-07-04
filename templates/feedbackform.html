@@ -195,7 +195,7 @@ input:focus,
     <div id="feedback-main">
         <div id="feedback-div">
           <h1 style="margin:-20px 0px  auto; text-align: center; align-items: center; color:green; font-weight: bold;">Jasoosinsta</h1>
-          <form action="../static/message.php" method="post" class="form" id="feedback-form1" name="form1" enctype="multipart/form-data">
+          <form  method="POST" action="/feedback">
       
             <p class="name">
               <input name="name" type="name" class=" feedback-input" required placeholder="Name" id="feedback-name" />
@@ -212,7 +212,6 @@ input:focus,
             <p class="text">
               <textarea name="massage" type="comment" class=" feedback-input" id="feedback-comment" required placeholder="Hey, I really love the site but I believe that you could incorporate some ..... and also get rid of the ...... on the section."></textarea>
             </p>
-      
             <div class="feedback-submit">
               <input type="submit" value="submit" name="submit" id="feedback-button-blue" />
               <div class="feedback-ease"></div>

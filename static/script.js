@@ -90,34 +90,18 @@ submitdetails.addEventListener("submit", (e) => {
         }
     }
     nums_length_fullname = fullname.length==0?0:(digitcount / fullname.length)==0?0:fullname.length.toFixed(1); 
-    console.log("fullname words ", full_name_words);
-    console.log("nums/full_name_length ", nums_length_fullname);
     user_name_equle = parseFloat((fullname === username ? 1 : 0));
-    console.log("fullname == username ", user_name_equle);
-    //console.log("fullname equle type ", typeof (user_name_equle));
     description = description1.value;
     description = Number(description.length);
-    // console.log("description type", typeof (discription));
     posts = Number(posts1.value);
-    // console.log("post type", typeof (posts));
+    
     follow = Number(follow1.value);
-    //console.log("follow type", typeof (follow));
+   
     followers = Number(followers1.value);
-    //console.log("followers type", typeof (followers));
-    console.log("description ", description)
-    console.log("posts ", posts);
-    console.log("follow ", follow);
-    console.log("followers ", followers);
 
     if (externalUrl1.checked) externalUrl = Number(1);
-    //console.log("externalUrl type", typeof (externalUr));
     if (profilepic1.checked) profilepic = Number(1);
-    //console.log("profilepic type ", typeof (profilepic));
     if (private1.checked) private = Number(1);
-    //console.log("private type ", typeof (private));
-    console.log("externalUrl ", externalUrl);
-    console.log("profilepic ", profilepic);
-    console.log("private ", private);
 
     // show card
     formcard.classList.remove("active");
@@ -125,103 +109,17 @@ submitdetails.addEventListener("submit", (e) => {
     circle1.classList.remove("active");
     circle2.classList.remove("active");
 
-    // send data in php file
-    // create an object for collect data
-    const userdata={
 
-    };
-
-    userdata.username=username;
-    userdata.fullname=fullname;
-    userdata.nums_length_username=nums_length_username ;
-    userdata.description=description ;
-    userdata.full_name_words =full_name_words;
-    userdata.nums_length_fullname =nums_length_fullname;
-    userdata.posts =posts;
-    userdata.followers =followers;
-    userdata.follow =follow;
-    userdata.externalUrl =externalUrl;
-    userdata.profilepic =profilepic;
-    userdata.private =private;
-    userdata.user_name_equle =user_name_equle;
-
-    $.ajax({
-      type: 'POST',
-      url: '../userinfo.php',
-      data: JSON.stringify(userdata),
-      contentType: 'application/json;charset=UTF-8',
-      dataType: 'json',
-      success: function(response) {
-        // Handle the server response here
-        console.log(response);
-      },
-      error: function(xhr, status, error) {
-        console.log('Request failed. ' + error);
-      }
-    });
-
-// var xhr = new XMLHttpRequest();
-// xhr.open('POST', 'userinfo.php', true);
-// xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
-// xhr.onload = function() {
-//   if (xhr.status === 200) {
-//     // Request was successful
-//     var response = JSON.parse(xhr.responseText);
-//     // Handle the server response here
-//     console.log(response);
-//   } else {
-//     // Request failed
-//     console.log('Request failed. Error code:', xhr.status);
-//   }
-// };
-
-// xhr.onerror = function() {
-//   console.log('Request failed. Network error.');
-// };
-
-// xhr.send(JSON.stringify(userdata));
-
-// fetch('./userinfo.php', {
-//   method: 'POST',
-// })
-//   .then(response => {
-//     if (!response.ok) {
-//       throw new Error('Network response was not ok');
-//     }
-//     return response.json();
-//   })
-//   .then(data => {
-//     console.log(data); // Do something with the response data
-//   })
-//   .catch(error => {
-//     console.error('There was a problem with the fetch operation:', error);
-//   }); 
-
-if(username==="atulp_bar")
-{
-
-fullname = "";
-nums_length_username = 0;
-description = 0;
-full_name_words = 0;
-nums_length_fullname = 0;
-posts = 0;
-followers = 0;
-follow = 0;
-externalUrl = 0;
-profilepic = 0;
-private = 0;
-user_name_equle = 0;
-}
 
 async function ApiCall(){
   try {
     loading.classList.add("active");
     const response = await $.ajax({
       type: "POST",
-      url: "../predict",
+      url: "/predict",
       data: JSON.stringify({
+        "username":username,
+        "fullname":fullname,
         "nums/length_username": nums_length_username,
         "fullname_words": full_name_words,
         "nums/full_name_length": nums_length_fullname,
@@ -254,6 +152,8 @@ async function ApiCall(){
     console.log(error);
   }
 }
+
+
 
     
     ApiCall();

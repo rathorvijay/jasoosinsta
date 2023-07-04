@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+     <!-- Open Graph Meta Tags -->
+     <meta property="og:title" content="Check Instagram Profile Real or Fake">
+     <meta property="og:description" content="Use our jasoosinsta to determine whether an Instagram profile is real or fake.">
+     <meta property="og:image" content="./static/assets/logofinal.png">
+     <meta property="og:url" content="https://jasoosinsta.000webhostapp.com/">
+     <meta property="og:type" content="jasoosinsta">
+     
+     <!-- Twitter Meta Tags -->
+     <meta name="twitter:card" content="Your Twitter Card Type Here">
+     <meta name="twitter:title" content="Check Instagram Profile Real or Fake">
+     <meta name="twitter:description" content="Use our jasoosinsta to determine whether an Instagram profile is real or fake.">
+     <meta name="twitter:image" content="../static/assets/logofinal.png">
+
+    <!-- favicon -->
+    <link rel="icon" type="image/x-icon" href="./static/assets/logofinal.png">
+    <!-- font family -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <title>Jasoosinsta</title>
+
+    <!-- css styling file -->
+    <link rel="stylesheet" href="./static/style.css">
+    
+</head>
+
+<body>
+    <div class="container">
+        <!-- zoom in zoom out when site load -->
+        <div class="zoom-in-out-box" id="container" container>
+            <div class="image">
+                <img src="./static/assets/logofinal.png" width="100" height="100">
+            </div>
+            <h1 class="heading text-rainbow-animation">Jasoosinsta</h1>
+        </div>
+        <!-- nav bar -->
+        <div class="navbar">
+            <ul>
+                <!-- home page link -->
+                <li>
+                    <a href="/index.html" class="home"><i class="ri-home-4-line"></i><span
+                            class="tooltip">Home</span></a>
+                </li>
+                <!-- dropdown nav -->
+                <li>
+                    <div class="dropdown">
+                        <i class="ri-share-line" share></i>
+                        <div class="dropdown-content">
+
+                            <!-- whatsapp share -->
+                            <a href="https://api.whatsapp.com/send?text=https://jasoosinsta.000webhostapp.com/" target="_blank">
+                                <i id="w" class="ri-whatsapp-line"></i>
+                            </a>
+
+                            <!-- instagram share -->
+                            <a href="https://www.instagram.com/create/badge/?url=https://jasoosinsta.000webhostapp.com/"
+                                target="_blank">
+                                <i id="ins"class="ri-instagram-line"></i>
+                            </a>
+
+                            <!-- Facebook share button -->
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=https://jasoosinsta.000webhostapp.com/"
+                                target="_blank">
+                                <i id="f" class="ri-facebook-circle-line"></i>
+                            </a>
+
+                            <!-- Twitter share button -->
+                            <a href="https://twitter.com/intent/tweet?url=https://jasoosinsta.000webhostapp.com/&text=Check out this website!"
+                                target="_blank">
+                                <i id="t"class="ri-twitter-line"></i>
+                            </a>
+
+                            <!-- LinkedIn share button -->
+                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://jasoosinsta.000webhostapp.com/"
+                                target="_blank">
+                                <i id="t" class="ri-linkedin-box-line"></i>
+                            </a>
+
+                        </div>
+                    </div>
+                </li>
+                <!-- feedback page link-->
+                <li>
+                    <a href="/feedbackform.html"><i class="ri-feedback-line"></i><span
+                            class="tooltip">Feedback</span></a>
+                </li>
+                <!-- policy page link-->
+                <li>
+                    <a href="/policy.html"><i class="ri-book-mark-line"></i><span class="tooltip">Policy</span></a>
+                </li>
+                <li>
+                    <a href="mailto:jasoosinsta@.com"><i class="ri-mail-line"></i><span
+                            class="tooltip">Mail</span></a>
+                </li>
+                <!-- founder profile page link -->
+                <li>
+                    <a href="/profilebadge.html"><i class="ri-team-fill"></i><span
+                            class="tooltip">Team</span></a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- form heading text animation -->
+        <h1 class="mainheading">Fake_Instagram_Profile_Detector</h1>
+
+        <!-- upper circle  animation red-->
+        <div class="circle1" circle1></div>
+
+        <!-- user details form -->
+        <div class="form" formcard>
+            <form submitdetails>
+                <div class="grid-container">
+
+                    <div class="grid-item">
+                        <label class="label" for="Username">Username<sup style="color:red;">*</sup></label>
+                    </div>
+                    <div class="grid-item">
+                        <input class="input ph" type="text" id="Username" name="Username" placeholder="Enter username"
+                            username required>
+                    </div>
+
+                    <div class="grid-item">
+                        <label for="Fullname">Fullname</label>
+                    </div>
+                    <div class="grid-item">
+                        <input class="input ph" type="text" id="Fullname" name="Fullname" placeholder="Enter fullname"
+                            fullname>
+                    </div>
+
+                    <div class="grid-item">
+                        <label class="label" for="Description">Description</label>
+                    </div>
+                    <div class="grid-item">
+                        <input type="textarea" id="Description" name="Description" class="ph"
+                            placeholder="Enter description" discription>
+                    </div>
+
+                    <div class="grid-item">
+                        <label for="externalUrl">ExternalUrl</label>
+                    </div>
+                    <div class="grid-item">
+                        <input type="checkbox" class="checkbox" id="externalUrl" name="externalUrl" externalUrl>
+                    </div>
+
+                    <div class="grid-item">
+                        <label for="profilepic">Profilepic</label>
+                    </div>
+                    <div class="grid-item">
+                        <input type="checkbox" class="checkbox" id="profilepic" name="profilepic" profilepic>
+                    </div>
+
+                    <div class="grid-item">
+                        <label for="private">Private</label>
+                    </div>
+                    <div class="grid-item">
+                        <input type="checkbox" class="checkbox" id="private" name="private" private>
+                    </div>
+
+                    <div class="grid-item">
+                        <label for="posts">Posts</label>
+                    </div>
+                    <div class="grid-item">
+                        <input type="number" class="ph" id="posts" name="posts" placeholder="posts" posts>
+                    </div>
+
+                    <div class="grid-item">
+                        <label for="followers">Followers</label>
+                    </div>
+                    <div class="grid-item">
+                        <input type="number" class="ph" id="followers" name="followers" placeholder="followers"
+                            followers>
+                    </div>
+
+                    <div class="grid-item">
+                        <label for="follow">Following</label>
+                    </div>
+                    <div class="grid-item">
+                        <input type="number" class="ph" id="follow" name="follow" placeholder="following" follow>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <button type="submit" class="btn-submit" name="submit" submitbtn>Submit</button>
+                    <button type="reset" class="btn-reset">Reset</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- bottom circle animation blue -->
+        <div class="circle2" circle2></div>
+
+        <!-- footer text -->
+        <p class="footer"> Copyright © 2024 <a style="text-decoration:none;" href="">Jasoosinsta</a>. All rights reserved.
+        </p>
+
+        <!-- loading when user submit details -->
+        <span class="loading" loading></span>
+
+        <!-- card real or fake -->
+        <div class="card" checkcard>
+            <img src="" width="200"cardimg />
+            <div class="heading" cardheading></div>
+            <div class="para" cardpara></div>
+            <button class="btn" okbtn> Ok </button>
+        </div>
+
+    </div>
+    <!-- js file -->
+    <script src="./static/script.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</body>
+
+</html>
