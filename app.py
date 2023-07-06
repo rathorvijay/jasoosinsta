@@ -4,27 +4,38 @@ import numpy as np
 import tensorflow as tf
 import pandas as pd
 import mysql.connector
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
+SMTP_SERVER = os.getenv('SMTP_SERVER')
+SMTP_PORT =os.getenv('SMTP_PORT')
+SMTP_USERNAME =os.getenv('SMTP_USERNAME')
+SMTP_PASSWORD = os.getenv('SMTP_PASSWORD')
+SENDER_EMAIL = os.getenv('SENDER_EMAIL')
 
 app = Flask(__name__)
 
 # load the model
 model = tf.keras.models.load_model('Fake_IG_ML_Model.h5')
-
 # Establishing the connection
-cnx = mysql.connector.connect(
-    host='localhost',
-    port=3307,
-    user='root',
-    password='',
-    database='instagram-feedback'
-)
-
-# Checking if the connection is successful
-if not cnx.is_connected():
-    print("Failed to connect to the database.")
-else:
-    print("database connection successful.")
-
+try:
+    cnx = mysql.connector.connect(
+        host=os.getenv('DB_HOST'),
+        port=os.getenv('DB_PORT'),
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD'),
+        database=os.getenv('DB_NAME')
+    )
+    print("Database connection successful.")
+except mysql.connector.Error as error:
+    print("Failed to connect to the database:", error)
+    cnx = None
 
 @app.route('/')
 def home():
@@ -50,6 +61,23 @@ def profilebadge():
 def message():
     return render_template('message.php')
 
+def send_email(subject, message, recipient_email):
+    # Create message object
+    msg = MIMEMultipart()
+    msg['From'] = SENDER_EMAIL
+    msg['To'] =  recipient_email
+    msg['Subject'] = subject
+
+    # Add message body
+    msg.attach(MIMEText(message, 'plain'))
+
+    # Create SMTP session
+    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+        server.starttls()
+        server.login(SMTP_USERNAME, SMTP_PASSWORD)
+
+        # Send email
+        server.send_message(msg)
 
 @app.route('/feedback', methods=['GET', 'POST'])
 def form_handler():
@@ -61,6 +89,18 @@ def form_handler():
         massage = request.form['massage']
 
         print(name, email, subject, massage)
+
+        if cnx is None:
+            error_message = "Failed to connect to the database. Please try again later."
+            print(error_message)
+            response = jsonify({'message': error_message})
+            response.status_code = 500
+            return """
+            <script>
+                alert('{}');
+                window.location.href = '/index.html';
+            </script>
+            """.format(error_message)
 
         # Inserting data into the feedback table
         insert_query = "INSERT INTO feedback (name, email, subject, massage) VALUES (%s, %s, %s, %s)"
@@ -75,10 +115,14 @@ def form_handler():
             response.status_code = 200
             cursor.close()
 
+            subject = 'Feedback Submission'
+            message = f'Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {massage}'
+            send_email(subject, message,email)
+
             # Return the response with a JavaScript alert
             return """
             <script>
-                alert('Feedback submitted successfully');
+                alert('Feedback submitted successfully check your email');
                 window.location.href = '/index.html';
             </script>
             """
@@ -88,12 +132,12 @@ def form_handler():
             response.status_code = 500
             return """
             <script>
-                alert('something went wrong');
+                alert('Something went wrong during insertion');
                 window.location.href = '/feedbackform.html';
             </script>
             """
-
-    return render_template('feedbackform.html')    
+        
+    return render_template('feedbackform.html')  
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -128,17 +172,20 @@ def predict():
     prediction = model.predict(user_input)
 
      # Inserting data into the userinfo table
-    insert_query = "INSERT INTO userinfo (Username, Fullname, Description, ExternalUrl, Profilepic, Private, Posts, Followers, Follow) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-    values = (data["username"], data["fullname"], data["description"], data["externalUrl"], data["profilepic"], data["private"], data["posts"], data["followers"], data["follow"])
+    if cnx is not None:
+      insert_query = "INSERT INTO userinfo (Username, Fullname, Description, ExternalUrl, Profilepic, Private, Posts, Followers, Follow) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+      values = (data["username"], data["fullname"], data["description"], data["externalUrl"], data["profilepic"], data["private"], data["posts"], data["followers"], data["follow"])
 
-    try:
-        cursor = cnx.cursor()
-        cursor.execute(insert_query, values)
-        cnx.commit()
-        print("User data inserted successfully")
-        cursor.close()
-    except mysql.connector.Error as error:
+      try:
+            cursor = cnx.cursor()
+            cursor.execute(insert_query, values)
+            cnx.commit()
+            print("User data inserted successfully")
+            cursor.close()
+      except mysql.connector.Error as error:
              print("Something went wrong during insertion:", error)
+    else:
+        print("something went wrong , connetion fail")
 
     # Determine the predicted result
     result = 1 if prediction[0][0] > prediction[0][1] else 0
